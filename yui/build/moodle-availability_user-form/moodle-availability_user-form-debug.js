@@ -9,10 +9,10 @@ M.availability_user.form.initInner = function(param) {
     // Sort names by lastname, firstname
     this.params.sort(function(a, b) {
         if (a.lastname.toLowerCase() < b.lastname.toLowerCase() ||
-            a.lastname.toLowerCase() == b.lastname.toLowerCase() && a.firstname.toLowerCase() == b.firstname.toLowerCase()) {
+            a.lastname.toLowerCase() === b.lastname.toLowerCase() && a.firstname.toLowerCase() === b.firstname.toLowerCase()) {
             return -1;
         }
-        if (a.lastname.toLowerCase() == b.lastname.toLowerCase() && a.firstname.toLowerCase() == b.firstname.toLowerCase()) {
+        if (a.lastname.toLowerCase() === b.lastname.toLowerCase() && a.firstname.toLowerCase() === b.firstname.toLowerCase()) {
             return 0;
         }
         return 1;

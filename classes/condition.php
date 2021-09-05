@@ -28,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Condition to restrict access by user
  */
-class condition extends \core_availability\condition {    
+class condition extends \core_availability\condition {
     /**
      * @var int ID of the required user
      */
@@ -37,7 +37,7 @@ class condition extends \core_availability\condition {
     /**
      * Constructor
      *
-     * @param  mixed $structure Data structure from JSON decode
+     * @param  \stdClass $structure Data structure from JSON decode
      * @return void
      */
     public function __construct($structure) {
@@ -49,7 +49,7 @@ class condition extends \core_availability\condition {
     /**
      * Saves tree data back to a structure object.
      *
-     * @return stdClass Structure object (ready to be made into JSON format)
+     * @return \stdClass Structure object (ready to be made into JSON format)
      */
     public function save() {
         return (object)['type' => 'user', 'userid' => $this->userid];
@@ -58,10 +58,10 @@ class condition extends \core_availability\condition {
     /**
      * Determines whether this item is availabile.
      *
-     * @param  mixed $not Set true if we are inverting the condition
-     * @param  mixed $info Item we're checking
-     * @param  mixed $grabthelot if true, caches information required for all course-modules
-     * @param  mixed $userid User ID to check availability for
+     * @param  bool $not Set true if we are inverting the condition
+     * @param  \core_availability\info $info Item we're checking
+     * @param  bool $grabthelot if true, caches information required for all course-modules
+     * @param  int $userid User ID to check availability for
      * @return bool true if available
      */
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
@@ -71,9 +71,9 @@ class condition extends \core_availability\condition {
     /**
      * Obtains a string describing this restriction (whether or not it actually applies).
      *
-     * @param  mixed $full Set true if this is the 'full information' view
-     * @param  mixed $not Set true if we are inverting the condition
-     * @param  mixed $info Item we're checking
+     * @param  bool $full Set true if this is the 'full information' view
+     * @param  bool $not Set true if we are inverting the condition
+     * @param  \core_availability\info $info Item we're checking
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, \core_availability\info $info) {
