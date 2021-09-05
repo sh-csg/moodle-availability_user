@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -29,7 +28,10 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Condition to restrict access by user
  */
-class condition extends \core_availability\condition {
+class condition extends \core_availability\condition {    
+    /**
+     * @var int ID of the required user
+     */
     protected $userid;
 
     /**
@@ -56,10 +58,10 @@ class condition extends \core_availability\condition {
     /**
      * Determines whether this item is availabile.
      *
-     * @param  mixed $not   Set true if we are inverting the condition
-     * @param  mixed $info  Item we're checking
-     * @param  mixed $grabthelot    Performance hint: if true, caches information required for all course-modules, to make the front page and similar pages work more quickly (works only for current user)
-     * @param  mixed $userid    User ID to check availability for
+     * @param  mixed $not Set true if we are inverting the condition
+     * @param  mixed $info Item we're checking
+     * @param  mixed $grabthelot if true, caches information required for all course-modules
+     * @param  mixed $userid User ID to check availability for
      * @return bool true if available
      */
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
@@ -69,9 +71,9 @@ class condition extends \core_availability\condition {
     /**
      * Obtains a string describing this restriction (whether or not it actually applies).
      *
-     * @param  mixed $full  Set true if this is the 'full information' view
-     * @param  mixed $not   Set true if we are inverting the condition
-     * @param  mixed $info  Item we're checking
+     * @param  mixed $full Set true if this is the 'full information' view
+     * @param  mixed $not Set true if we are inverting the condition
+     * @param  mixed $info Item we're checking
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, \core_availability\info $info) {

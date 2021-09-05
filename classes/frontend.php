@@ -1,5 +1,4 @@
 <?php
-
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -29,7 +28,7 @@ defined('MOODLE_INTERNAL') || die();
 /**
  * Frontend class for availability per user
  */
-class frontend extends \core_availability\frontend {    
+class frontend extends \core_availability\frontend {
     /**
      * Gets a list of string identifiers (in the plugin's language file) that are required in JavaScript for this plugin.
      *
@@ -38,7 +37,7 @@ class frontend extends \core_availability\frontend {
     protected function get_javascript_strings() {
         return ['title', 'description', 'missing_user'];
     }
-    
+
     /**
      * Delivers parameters to the javascript part of the plugin
      * The returned array consists of firstname, lastname and id of the enrolled users
@@ -53,13 +52,13 @@ class frontend extends \core_availability\frontend {
         $participants = get_enrolled_users($context);
         $participantList = [];
         foreach ($participants as $p) {
-            array_push($participantList, ['firstname' => $p->firstname, 'lastname' => $p->lastname, 'id' => $p->id]);
+            array_push($participantlist, ['firstname' => $p->firstname, 'lastname' => $p->lastname, 'id' => $p->id]);
         }
-        return [$participantList];
+        return [$participantlist];
     }
-    
+
     /**
-     * Decides whether this plugin should be available in a given course. 
+     * Decides whether this plugin should be available in a given course.
      * Returns false when there are no enrolled users in the course, else true.
      *
      * @param  mixed $course Course object
