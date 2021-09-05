@@ -1,4 +1,5 @@
 <?php
+
 // This file is part of Moodle - https://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,35 +16,59 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Restrict access by user
  *
  * @package     availability_user
  * @copyright   2021 Stefan Hanauska <stefan.hanauska@altmuehlnet.de>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace availability_user;
 
 defined('MOODLE_INTERNAL') || die();
 
-class frontend extends \core_availability\frontend {
-
+/**
+ * Frontend class for availability per user
+ */
+class frontend extends \core_availability\frontend {    
+    /**
+     * Gets a list of string identifiers (in the plugin's language file) that are required in JavaScript for this plugin.
+     *
+     * @return Array of required string identifiers
+     */
     protected function get_javascript_strings() {
         return ['title', 'description', 'missing_user'];
     }
-
+    
+    /**
+     * Delivers parameters to the javascript part of the plugin
+     * The returned array consists of firstname, lastname and id of the enrolled users
+     *
+     * @param  mixed $course Course object
+     * @param  mixed $cm Course-module currently being edited (null if none)
+     * @param  mixed $section Section currently being edited (null if none)
+     * @return Array of parameters for the JavaScript function
+     */
     protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
         $context = \context_course::instance($course->id);
         $participants = get_enrolled_users($context);
-        $participant_list = array();
-        foreach($participants as $p) {
-            array_push($participant_list, array('firstname' => $p->firstname, 'lastname' => $p->lastname, 'id' => $p->id));
+        $participantList = [];
+        foreach ($participants as $p) {
+            array_push($participantList, ['firstname' => $p->firstname, 'lastname' => $p->lastname, 'id' => $p->id]);
         }
-        return array($participant_list);
+        return [$participantList];
     }
-
+    
+    /**
+     * Decides whether this plugin should be available in a given course. 
+     * Returns false when there are no enrolled users in the course, else true.
+     *
+     * @param  mixed $course Course object
+     * @param  mixed $cm Course-module currently being edited (null if none)
+     * @param  mixed $section Section currently being edited (null if none)
+     * @return bool
+     */
     protected function allow_add($course, \cm_info $cm = null, \section_info $section = null) {
-        // only allowed if there are enrolled users in the course
-        return(get_enrolled_users(\context_course::instance($course->id))>0);
+        // Adding is only allowed if there are enrolled users in the course.
+        return(get_enrolled_users(\context_course::instance($course->id)) > 0);
     }
 }
