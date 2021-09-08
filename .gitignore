@@ -1,2 +1,4 @@
 .php-cs-fixer.php
 .shifter.json
+/node_modules/
+/.vscode/
