@@ -1,5 +1,6 @@
 YUI.add('moodle-availability_user-form', function (Y, NAME) {
 
+// eslint-disable-next-line camelcase
 M.availability_user = M.availability_user || {};
 
 M.availability_user.form = Y.Object(M.core_availability.plugin);
@@ -21,8 +22,7 @@ M.availability_user.form.initInner = function(param) {
 };
 
 M.availability_user.form.getNode = function(json) {
-    var strings = M.str.availability_user;
-    var html = '<label><span class="col-form-label pr-3">' + strings.title +
+    var html = '<label><span class="col-form-label pr-3">' + M.util.get_string('title', 'availability_user') +
         '</span><span class="availability-group form-group"><select class="custom-select">';
 
     this.params.forEach(
@@ -36,7 +36,11 @@ M.availability_user.form.getNode = function(json) {
 
     if (json.userid) {
         if (node.one('option[value=' + json.userid + ']') === null) {
-            node.one('select').appendChild(Y.Node.create('<option value="' + json.userid + '">(' + strings.missing_user + ')'));
+            node.one('select').appendChild(
+                Y.Node.create('<option value="' + json.userid + '">(' +
+                M.util.get_string('missing_user', 'availability_user') +
+                ')')
+                );
         }
         node.one('option[value=' + json.userid + ']').set('selected', true);
     }
