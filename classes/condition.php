@@ -77,11 +77,11 @@ class condition extends \core_availability\condition {
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, \core_availability\info $info) {
-        $user = \core_user::get_user($this->userid, 'firstname,lastname');
+        $user = \core_user::get_user($this->userid);
         if (!$user) {
             return get_string('requires_unknown_user', 'availability_user');
         } else {
-            return get_string('requires_user', 'availability_user', $user->lastname . ', ' . $user->firstname);
+            return get_string('requires_user', 'availability_user', fullname($user));
         }
     }
 

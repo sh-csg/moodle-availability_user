@@ -7,18 +7,6 @@ M.availability_user.form = Y.Object(M.core_availability.plugin);
 
 M.availability_user.form.initInner = function(param) {
     this.params = param;
-    // Sort names by lastname, firstname
-    this.params.sort(function(a, b) {
-        if (a.lastname.toLowerCase() < b.lastname.toLowerCase() ||
-            a.lastname.toLowerCase() === b.lastname.toLowerCase() && a.firstname.toLowerCase() === b.firstname.toLowerCase()) {
-            return -1;
-        }
-        if (a.lastname.toLowerCase() === b.lastname.toLowerCase() && a.firstname.toLowerCase() === b.firstname.toLowerCase()) {
-            return 0;
-        }
-        return 1;
-    }
-    );
 };
 
 M.availability_user.form.getNode = function(json) {
@@ -27,7 +15,7 @@ M.availability_user.form.getNode = function(json) {
 
     this.params.forEach(
         function(val) {
-            html += '<option value="' + val.id + '">' + val.lastname + ', ' + val.firstname + '</option>';
+            html += '<option value="' + val.id + '">' + val.fullname + '</option>';
         }
     );
 

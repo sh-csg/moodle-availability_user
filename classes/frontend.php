@@ -49,10 +49,11 @@ class frontend extends \core_availability\frontend {
      */
     protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
         $context = \context_course::instance($course->id);
-        $participants = get_enrolled_users($context);
+        $participants = get_enrolled_users($context,'',0,'u.*','lastname, firstname');
         $participantlist = [];
         foreach ($participants as $p) {
-            array_push($participantlist, ['firstname' => $p->firstname, 'lastname' => $p->lastname, 'id' => $p->id]);
+            array_push($participantlist, ['firstname' => $p->firstname, 'lastname' => $p->lastname,
+                'fullname' => fullname($p), 'id' => $p->id]);
         }
         return [$participantlist];
     }
