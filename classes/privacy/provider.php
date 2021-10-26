@@ -1,5 +1,5 @@
 <?php
-// This file is part of Moodle - https://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,20 +12,35 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Plugin version and other meta-data are defined here.
+ * Privacy subsystem implementation for availability_user
  *
  * @package     availability_user
  * @copyright   2021 Stefan Hanauska <stefan.hanauska@altmuehlnet.de>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace availability_user\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->component = 'availability_user';
-$plugin->release = '0.1.13';
-$plugin->version = 2021102601;
-$plugin->requires = 2020061500;
-$plugin->maturity = MATURITY_BETA;
+/**
+ * Privacy Subsystem for availability_user implementing null_provider.
+ *
+ * @copyright  2021 Stefan Hanauska <stefan.hanauska@altmuehlnet.de>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements \core_privacy\local\metadata\null_provider {
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function get_reason() : string {
+        return 'privacy:metadata';
+    }
+}
