@@ -31,3 +31,4 @@ $string['description'] = 'Restrict access to a certain enrolled user';
 $string['requires_user'] = 'Requires user {$a}';
 $string['requires_unknown_user'] = 'Requires unknown user';
 $string['missing_user'] = 'Not enrolled user';
+$string['privacy:metadata'] = '';
