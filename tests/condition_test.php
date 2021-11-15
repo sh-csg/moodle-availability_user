@@ -26,6 +26,9 @@ defined('MOODLE_INTERNAL') || die();
 
 use availability_user\condition;
 
+/**
+ * Testcase for availability_user
+ */
 class availability_user_condition_testcase extends advanced_testcase {
     public function setUp(): void {
         global $DB, $CFG;
