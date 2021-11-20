@@ -30,25 +30,80 @@ use availability_user\condition;
  * Testcase for availability_user
  */
 class availability_user_condition_testcase extends advanced_testcase {
+
+    /**
+     * Load necessary libs
+     */
+    public static function setupBeforeClass(): void {
+        global $CFG;
+        require_once($CFG->dirroot . '/availability/tests/fixtures/mock_info.php');
+    }
+
+    /**
+     * Prepare testing
+     */
     public function setUp(): void {
         global $DB, $CFG;
         $this->setAdminUser();
-        $info = new \core_availability\mock_info();
+        $this->info = new \core_availability\mock_info();
         $this->resetAfterTest();
-        $user1 = $this->getDataGenerator()->create_user(array(
+        $this->user1 = $this->getDataGenerator()->create_user(
+            array(
             'email' => 'user1@example.com',
             'username' => 'user1')
         );
-        $user2 = $this->getDataGenerator()->create_user(array(
+        $this->user2 = $this->getDataGenerator()->create_user(
+            array(
             'email' => 'user2@example.com',
             'username' => 'user2')
         );
-        $structure = new object();
-        $structure->userid = $user1->id;
-        $cond = new condition($structure);
-        $this->assertTrue($cond->is_available(false, $info, true, $user1->id));
-        $this->assertFalse($cond->is_available(false, $info, true, $user2->id));
-        $this->assertFalse($cond->is_available(true, $info, true, $user1->id));
-        $this->assertTrue($cond->is_available(true, $info, true, $user2->id));
+        $structure = new stdClass;
+        $structure->userid = $this->user1->id;
+        $this->cond = new condition($structure);
+    }
+
+    /**
+     * Check whether the item is available for the right user
+     *
+     * @return void
+     */
+    public function test_right_user() {
+        global $USER;
+        $this->setUser($this->user1);
+        $this->assertTrue($this->cond->is_available(false, $this->info, true, $USER->id));
+    }
+
+    /**
+     * Check whether the item is not available for the right user if using "not" operator
+     *
+     * @return void
+     */
+    public function test_right_user_not() {
+        global $USER;
+        $this->setUser($this->user1);
+        $this->assertFalse($this->cond->is_available(true, $this->info, true, $USER->id));
+    }
+
+    /**
+     * Check whether the item is not available for the wrong user
+     *
+     * @return void
+     */
+    public function test_wrong_user() {
+        global $USER;
+        $this->setUser($this->user2);
+        $this->assertFalse($this->cond->is_available(false, $this->info, true, $USER->id));
+        $this->assertTrue($this->cond->is_available(true, $this->info, true, $USER->id));
+    }
+
+    /**
+     * Check whether the item is not available for the wrong user if using "not" operator
+     *
+     * @return void
+     */
+    public function test_wrong_user_not() {
+        global $USER;
+        $this->setUser($this->user2);
+        $this->assertTrue($this->cond->is_available(true, $this->info, true, $USER->id));
     }
 }

@@ -65,7 +65,7 @@ class condition extends \core_availability\condition {
      * @return bool true if available
      */
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
-        return $not ^ $userid == $this->userid;
+        return (bool)($not ^ $userid == $this->userid);
     }
 
     /**
