@@ -41,8 +41,13 @@ class condition extends \core_availability\condition {
      * @return void
      */
     public function __construct($structure) {
+        $this->userids = [];
+        if (isset($structure->userids)) {
+            $this->userids = $structure->userids;
+        }
+        // Ensure compatibility with old version.
         if (isset($structure->userid)) {
-            $this->userid = $structure->userid;
+            array_push($this->userids, $structure->userid);
         }
     }
 
@@ -52,7 +57,7 @@ class condition extends \core_availability\condition {
      * @return \stdClass Structure object (ready to be made into JSON format)
      */
     public function save() {
-        return (object)['type' => 'user', 'userid' => $this->userid];
+        return (object)['type' => 'user', 'userids' => $this->userids];
     }
 
     /**
@@ -65,7 +70,7 @@ class condition extends \core_availability\condition {
      * @return bool true if available
      */
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
-        return $not ^ $userid == $this->userid;
+        return $not ^ in_array($userid, $this->userids);
     }
 
     /**
@@ -77,11 +82,25 @@ class condition extends \core_availability\condition {
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, \core_availability\info $info) {
-        $user = \core_user::get_user($this->userid);
-        if (!$user) {
-            return get_string('requires_unknown_user', 'availability_user');
+        if (count($this->userids) > 1) {
+            $usernames = [];
+            foreach ($this->userids as $userid) {
+                $user = \core_user::get_user($userid);
+                if (!$user) {
+                    array_push($usernames, get_string('unknown_user', 'availability_user'));
+                } else {
+                    array_push($usernames, fullname($user));
+                }
+            }
+            return get_string('requires_'.($not ? 'not_' : '').'users', 'availability_user', implode(', ', $usernames));
         } else {
-            return get_string('requires_user', 'availability_user', fullname($user));
+            $user = \core_user::get_user($this->userids[0]);
+            if (!$user) {
+                $fullname = get_string('unknown_user', 'availability_user');
+            } else {
+                $fullname = fullname($user);
+            }
+            return get_string('requires_'.($not ? 'not_' : '').'user', 'availability_user', $fullname);
         }
     }
 
