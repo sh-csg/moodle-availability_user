@@ -82,25 +82,29 @@ class condition extends \core_availability\condition {
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, \core_availability\info $info) {
-        if (count($this->userids) > 1) {
-            $usernames = [];
-            foreach ($this->userids as $userid) {
-                $user = \core_user::get_user($userid);
-                if (!$user) {
-                    array_push($usernames, get_string('unknown_user', 'availability_user'));
-                } else {
-                    array_push($usernames, fullname($user));
+        if($full) {
+            if (count($this->userids) > 1) {
+                $usernames = [];
+                foreach ($this->userids as $userid) {
+                    $user = \core_user::get_user($userid);
+                    if (!$user) {
+                        array_push($usernames, get_string('unknown_user', 'availability_user'));
+                    } else {
+                        array_push($usernames, fullname($user));
+                    }
                 }
-            }
-            return get_string('requires_'.($not ? 'not_' : '').'users', 'availability_user', implode(', ', $usernames));
-        } else {
-            $user = \core_user::get_user($this->userids[0]);
-            if (!$user) {
-                $fullname = get_string('unknown_user', 'availability_user');
+                return get_string('requires_'.($not ? 'not_' : '').'users', 'availability_user', implode(', ', $usernames));
             } else {
-                $fullname = fullname($user);
+                $user = \core_user::get_user($this->userids[0]);
+                if (!$user) {
+                    $fullname = get_string('unknown_user', 'availability_user');
+                } else {
+                    $fullname = fullname($user);
+                }
+                return get_string('requires_'.($not ? 'not_' : '').'user', 'availability_user', $fullname);
             }
-            return get_string('requires_'.($not ? 'not_' : '').'user', 'availability_user', $fullname);
+        } else {
+            return get_string('requires_certain_user', 'availability_user');
         }
     }
 

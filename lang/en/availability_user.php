@@ -32,6 +32,7 @@ $string['requires_user'] = 'Requires user {$a}';
 $string['requires_not_user'] = 'Requires user except {$a}';
 $string['requires_users'] = 'Requires one of the users {$a}';
 $string['requires_not_users'] = 'Requires none of the users {$a}';
+$string['requires_certain_user'] = 'Requires a certain user';
 $string['unknown_user'] = 'unknown user';
 $string['missing_user'] = 'Not enrolled user';
 $string['privacy:metadata'] = '';
