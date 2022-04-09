@@ -23,8 +23,6 @@
  */
 namespace availability_user;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Frontend class for availability per user
  */

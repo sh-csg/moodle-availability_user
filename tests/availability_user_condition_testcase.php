@@ -20,10 +20,7 @@
  * @package     availability_user
  * @copyright   2021 Stefan Hanauska <stefan.hanauska@altmuehlnet.de>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @group       availability_user
  */
-
-defined('MOODLE_INTERNAL') || die();
 
 use availability_user\condition;
 

@@ -23,10 +23,7 @@
  */
 namespace availability_user;
 
-use core_availability\info;
 use core_availability\capability_checker;
-
-defined('MOODLE_INTERNAL') || die();
 
 /**
  * Condition to restrict access by user

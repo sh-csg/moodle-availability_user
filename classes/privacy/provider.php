@@ -24,8 +24,6 @@
 
 namespace availability_user\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Privacy Subsystem for availability_user implementing null_provider.
  *
