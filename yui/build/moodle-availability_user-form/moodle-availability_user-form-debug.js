@@ -23,7 +23,7 @@ M.availability_user.form.getNode = function(json) {
     var node = Y.Node.create('<span>' + html + '</span>');
 
     var userids = json.userids || [];
-    if(json.userid) {
+    if (json.userid) {
         userids.push(json.userid);
     }
     userids.forEach(
@@ -53,8 +53,8 @@ M.availability_user.form.fillValue = function(value, node) {
     var userSelect = node.one('select');
     var options = userSelect.get('options').get('_nodes');
     var users = [];
-    options.forEach( function(o) {
-        if(o.get('selected')) {
+    options.forEach(function(o) {
+        if (o.get('selected')) {
             users.push(o.get('value'));
         }
     });

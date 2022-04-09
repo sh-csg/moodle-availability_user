@@ -23,6 +23,9 @@
  */
 namespace availability_user;
 
+use core_availability\info;
+use core_availability\capability_checker;
+
 defined('MOODLE_INTERNAL') || die();
 
 /**
@@ -74,6 +77,33 @@ class condition extends \core_availability\condition {
     }
 
     /**
+     * Condition applies to user lists as userid is permanent.
+     *
+     * @return boolean
+     */
+    public function is_applied_to_user_lists() {
+        return true;
+    }
+
+    /**
+     * Checks the condition against a list of users - returns the filtered list
+     *
+     * @param array $users
+     * @param bool $not
+     * @param \core_availability\info $info
+     * @param capability_checker $checker
+     * @return array
+     */
+    public function filter_user_list(array $users, $not, \core_availability\info $info, capability_checker $checker) {
+        foreach ($users as $userid => $user) {
+            if (!$this->is_available($not, $info, false, $userid)) {
+                unset($users[$userid]);
+            }
+        }
+        return $users;
+    }
+
+    /**
      * Obtains a string describing this restriction (whether or not it actually applies).
      *
      * @param  bool $full Set true if this is the 'full information' view
@@ -82,7 +112,7 @@ class condition extends \core_availability\condition {
      * @return string Information string (for admin) about all restrictions on this item
      */
     public function get_description($full, $not, \core_availability\info $info) {
-        if($full) {
+        if ($full) {
             if (count($this->userids) > 1) {
                 $usernames = [];
                 foreach ($this->userids as $userid) {

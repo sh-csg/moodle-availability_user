@@ -20,6 +20,7 @@
  * @package     availability_user
  * @copyright   2021 Stefan Hanauska <stefan.hanauska@altmuehlnet.de>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @group       availability_user
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -34,7 +35,7 @@ class availability_user_condition_testcase extends advanced_testcase {
     /**
      * Load necessary libs
      */
-    public static function setupBeforeClass(): void {
+    public static function setUpBeforeClass(): void {
         global $CFG;
         require_once($CFG->dirroot . '/availability/tests/fixtures/mock_info.php');
     }
@@ -46,6 +47,7 @@ class availability_user_condition_testcase extends advanced_testcase {
         global $DB, $CFG;
         $this->setAdminUser();
         $this->info = new \core_availability\mock_info();
+        $this->capabilitychecker = new \core_availability\capability_checker($this->info->get_context());
         $this->resetAfterTest();
         $this->user1 = $this->getDataGenerator()->create_user(
             array(
@@ -234,4 +236,43 @@ class availability_user_condition_testcase extends advanced_testcase {
         $this->assertTrue($this->multiplecond->is_available(true, $this->info, true, $USER->id));
     }
 
+    /**
+     * Check filter_user_list() with a condition for multiple users
+     *
+     * @return void
+     */
+    public function test_users_multiple_filter() {
+        $users = [
+            $this->user1->id => $this->user1,
+            $this->user2->id => $this->user2,
+            $this->user3->id => $this->user3,
+            $this->user4->id => $this->user4
+        ];
+        $filteredlist = $this->multiplecond->filter_user_list($users, false, $this->info, $this->capabilitychecker);
+        $filtereduserids = array_keys($filteredlist);
+        $this->assertTrue(in_array($this->user1->id, $filtereduserids));
+        $this->assertTrue(in_array($this->user2->id, $filtereduserids));
+        $this->assertTrue(in_array($this->user3->id, $filtereduserids));
+        $this->assertFalse(in_array($this->user4->id, $filtereduserids));
+    }
+
+    /**
+     * Check filter_user_list() with a condition for multiple users using "not" operator
+     *
+     * @return void
+     */
+    public function test_users_multiple_filter_not() {
+        $users = [
+            $this->user1->id => $this->user1,
+            $this->user2->id => $this->user2,
+            $this->user3->id => $this->user3,
+            $this->user4->id => $this->user4
+        ];
+        $filteredlist = $this->multiplecond->filter_user_list($users, true, $this->info, $this->capabilitychecker);
+        $filtereduserids = array_keys($filteredlist);
+        $this->assertFalse(in_array($this->user1->id, $filtereduserids));
+        $this->assertFalse(in_array($this->user2->id, $filtereduserids));
+        $this->assertFalse(in_array($this->user3->id, $filtereduserids));
+        $this->assertTrue(in_array($this->user4->id, $filtereduserids));
+    }
 }

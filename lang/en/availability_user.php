@@ -35,4 +35,4 @@ $string['requires_not_users'] = 'Requires none of the users {$a}';
 $string['requires_certain_user'] = 'Requires a certain user';
 $string['unknown_user'] = 'unknown user';
 $string['missing_user'] = 'Not enrolled user';
-$string['privacy:metadata'] = '';
+$string['privacy:metadata'] = 'This plugin doesn\'t store any personal data itself.';
