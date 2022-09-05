@@ -11,7 +11,7 @@ M.availability_user.form.initInner = function(param) {
 
 M.availability_user.form.getNode = function(json) {
     var html = '<label><span class="col-form-label pr-3">' + M.util.get_string('title', 'availability_user') +
-        '</span><span class="availability-group form-group"><select class="custom-select" multiple>';
+        '</span><span class="availability-group form-group"><select id="availability_user_userids" class="custom-select" multiple>';
 
     this.params.forEach(
         function(val) {
@@ -50,7 +50,7 @@ M.availability_user.form.getNode = function(json) {
 };
 
 M.availability_user.form.fillValue = function(value, node) {
-    var userSelect = node.one('select');
+    var userSelect = node.one('#availability_user_userids');
     var options = userSelect.get('options').get('_nodes');
     var users = [];
     options.forEach(function(o) {
