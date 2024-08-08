@@ -29,10 +29,11 @@ use core_availability\capability_checker;
  * Condition to restrict access by user
  */
 class condition extends \core_availability\condition {
-    /**
-     * @var int ID of the required user
-     */
-    protected $userid;
+    /** @var int ID of the required user */
+    protected int $userid;
+
+    /** @var array $userids The user ids that the condition checks for */
+    protected array $userids;
 
     /**
      * Constructor
@@ -120,7 +121,7 @@ class condition extends \core_availability\condition {
                         array_push($usernames, fullname($user));
                     }
                 }
-                return get_string('requires_'.($not ? 'not_' : '').'users', 'availability_user', implode(', ', $usernames));
+                return get_string('requires_' . ($not ? 'not_' : '') . 'users', 'availability_user', implode(', ', $usernames));
             } else {
                 $user = \core_user::get_user($this->userids[0]);
                 if (!$user) {
@@ -128,7 +129,7 @@ class condition extends \core_availability\condition {
                 } else {
                     $fullname = fullname($user);
                 }
-                return get_string('requires_'.($not ? 'not_' : '').'user', 'availability_user', $fullname);
+                return get_string('requires_' . ($not ? 'not_' : '') . 'user', 'availability_user', $fullname);
             }
         } else {
             return get_string('requires_certain_user', 'availability_user');

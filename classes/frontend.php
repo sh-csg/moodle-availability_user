@@ -51,7 +51,7 @@ class frontend extends \core_availability\frontend {
         $participantlist = [];
         foreach ($participants as $p) {
             array_push($participantlist, ['firstname' => $p->firstname, 'lastname' => $p->lastname,
-                'fullname' => fullname($p), 'id' => $p->id]);
+                'fullname' => fullname($p), 'id' => $p->id, ]);
         }
         return [$participantlist];
     }

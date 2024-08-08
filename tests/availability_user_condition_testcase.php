@@ -28,7 +28,6 @@ use availability_user\condition;
  * Testcase for availability_user
  */
 class availability_user_condition_testcase extends advanced_testcase {
-
     /**
      * Load necessary libs
      */
@@ -47,34 +46,34 @@ class availability_user_condition_testcase extends advanced_testcase {
         $this->capabilitychecker = new \core_availability\capability_checker($this->info->get_context());
         $this->resetAfterTest();
         $this->user1 = $this->getDataGenerator()->create_user(
-            array(
+            [
             'email' => 'user1@example.com',
-            'username' => 'user1')
+            'username' => 'user1', ]
         );
         $this->user2 = $this->getDataGenerator()->create_user(
-            array(
+            [
             'email' => 'user2@example.com',
-            'username' => 'user2')
+            'username' => 'user2', ]
         );
         $this->user3 = $this->getDataGenerator()->create_user(
-            array(
+            [
             'email' => 'user3@example.com',
-            'username' => 'user3')
+            'username' => 'user3', ]
         );
         $this->user4 = $this->getDataGenerator()->create_user(
-            array(
+            [
             'email' => 'user4@example.com',
-            'username' => 'user4')
+            'username' => 'user4', ]
         );
-        $oldstructure = new stdClass;
+        $oldstructure = new stdClass();
         $oldstructure->userid = $this->user1->id;
         $this->cond = new condition($oldstructure);
 
-        $newstructure = new stdClass;
+        $newstructure = new stdClass();
         $newstructure->userids = [$this->user1->id];
         $this->newcond = new condition($newstructure);
 
-        $multiplestructure = new stdClass;
+        $multiplestructure = new stdClass();
         $multiplestructure->userids = [$this->user1->id, $this->user2->id, $this->user3->id];
         $this->multiplecond = new condition($multiplestructure);
     }
@@ -243,7 +242,7 @@ class availability_user_condition_testcase extends advanced_testcase {
             $this->user1->id => $this->user1,
             $this->user2->id => $this->user2,
             $this->user3->id => $this->user3,
-            $this->user4->id => $this->user4
+            $this->user4->id => $this->user4,
         ];
         $filteredlist = $this->multiplecond->filter_user_list($users, false, $this->info, $this->capabilitychecker);
         $filtereduserids = array_keys($filteredlist);
@@ -263,7 +262,7 @@ class availability_user_condition_testcase extends advanced_testcase {
             $this->user1->id => $this->user1,
             $this->user2->id => $this->user2,
             $this->user3->id => $this->user3,
-            $this->user4->id => $this->user4
+            $this->user4->id => $this->user4,
         ];
         $filteredlist = $this->multiplecond->filter_user_list($users, true, $this->info, $this->capabilitychecker);
         $filtereduserids = array_keys($filteredlist);
