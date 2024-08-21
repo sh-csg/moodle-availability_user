@@ -41,11 +41,11 @@ class frontend extends \core_availability\frontend {
      * The returned array consists of firstname, lastname and id of the enrolled users
      *
      * @param  \stdClass $course Course object
-     * @param  \cm_info $cm Course-module currently being edited (null if none)
-     * @param  \section_info $section Section currently being edited (null if none)
+     * @param  ?\cm_info $cm Course-module currently being edited (null if none)
+     * @param  ?\section_info $section Section currently being edited (null if none)
      * @return array Array of parameters for the JavaScript function
      */
-    protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
+    protected function get_javascript_init_params($course, ?\cm_info $cm = null, ?\section_info $section = null) {
         $context = \context_course::instance($course->id);
         $participants = get_enrolled_users($context, '', 0, 'u.*', 'lastname, firstname');
         $participantlist = [];
@@ -61,11 +61,11 @@ class frontend extends \core_availability\frontend {
      * Returns false when there are no enrolled users in the course, else true.
      *
      * @param  \stdClass $course Course object
-     * @param  \cm_info $cm Course-module currently being edited (null if none)
-     * @param  \section_info $section Section currently being edited (null if none)
+     * @param  ?\cm_info $cm Course-module currently being edited (null if none)
+     * @param  ?\section_info $section Section currently being edited (null if none)
      * @return bool
      */
-    protected function allow_add($course, \cm_info $cm = null, \section_info $section = null) {
+    protected function allow_add($course, ?\cm_info $cm = null, ?\section_info $section = null) {
         // Adding is only allowed if there are enrolled users in the course.
         return(get_enrolled_users(\context_course::instance($course->id)) > 0);
     }
