@@ -41,7 +41,7 @@ M.availability_user.form.getNode = function(json) {
     if (!M.availability_user.form.addedEvents) {
         M.availability_user.form.addedEvents = true;
         var root = Y.one('#fitem_id_availabilityconditionsjson');
-        root.delegate('click', function() {
+        root.delegate('change', function() {
             M.core_availability.form.update();
         }, '.availability_user select');
     }
@@ -50,14 +50,13 @@ M.availability_user.form.getNode = function(json) {
 };
 
 M.availability_user.form.fillValue = function(value, node) {
-    var userSelect = node.one('#availability_user_userids');
-    var options = userSelect.get('options').get('_nodes');
     var users = [];
-    options.forEach(function(o) {
-        if (o.get('selected')) {
-            users.push(o.get('value'));
+    var options = node.getDOMNode().querySelectorAll('select option');
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].selected) {
+            users.push(options[i].value);
         }
-    });
+    }
     value.userids = users;
 };
 

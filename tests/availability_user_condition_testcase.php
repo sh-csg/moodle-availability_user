@@ -27,25 +27,36 @@ namespace availability_user;
 /**
  * Testcase for availability_user
  */
-class availability_user_condition_testcase extends \advanced_testcase {
-    /** @var \core_availability\mock_info */
-    protected \core_availability\mock_info $info;
-    /** @var \core_availability\capability_checker */
-    protected \core_availability\capability_checker $capabilitychecker;
-    /** @var condition A condition using the old structure (single userid) */
-    protected condition $cond;
-    /** @var condition A condition using the new structure (multiple userids) */
-    protected condition $newcond;
-    /** @var condition A condition using multiple userids */
-    protected condition $multiplecond;
-    /** @var \stdClass */
-    protected \stdClass $user1;
-    /** @var \stdClass */
-    protected \stdClass $user2;
-    /** @var \stdClass */
-    protected \stdClass $user3;
-    /** @var \stdClass */
-    protected \stdClass $user4;
+class availability_user_condition_testcase extends advanced_testcase {
+    /** @var $info */
+    protected $info;
+
+    /** @var $capabilitychecker */
+    protected $capabilitychecker;
+
+    /** @var $user1 */
+    protected $user1;
+
+    /** @var $user2 */
+    protected $user2;
+
+    /** @var $user3 */
+    protected $user3;
+
+    /** @var $user4 */
+    protected $user4;
+
+    /** @var $cond */
+    protected $cond;
+
+    /** @var $newcond */
+    protected $newcond;
+
+    /** @var $multiplecond */
+    protected $multiplecond;
+
+    /** @var $emptycond */
+    protected $emptycond;
 
     /**
      * Load necessary libs
@@ -96,6 +107,10 @@ class availability_user_condition_testcase extends \advanced_testcase {
         $multiplestructure = new \stdClass();
         $multiplestructure->userids = [$this->user1->id, $this->user2->id, $this->user3->id];
         $this->multiplecond = new condition($multiplestructure);
+
+        $emptystructure = new stdClass();
+        $emptystructure->userids = [];
+        $this->emptycond = new condition($emptystructure);
     }
 
     /**
@@ -290,5 +305,29 @@ class availability_user_condition_testcase extends \advanced_testcase {
         $this->assertFalse(in_array($this->user2->id, $filtereduserids));
         $this->assertFalse(in_array($this->user3->id, $filtereduserids));
         $this->assertTrue(in_array($this->user4->id, $filtereduserids));
+    }
+
+    /**
+     * Check availability logic when no users are selected.
+     *
+     * @return void
+     */
+    public function test_empty_user_list_availability() {
+        global $USER;
+        $this->setUser($this->user1);
+        $this->assertFalse($this->emptycond->is_available(false, $this->info, true, $USER->id));
+        $this->assertTrue($this->emptycond->is_available(true, $this->info, true, $USER->id));
+    }
+
+    /**
+     * Ensure full description does not fail when no users are selected.
+     *
+     * @return void
+     */
+    public function test_empty_user_list_full_description() {
+        $this->assertEquals(
+            get_string('requires_certain_user', 'availability_user'),
+            $this->emptycond->get_description(true, false, $this->info)
+        );
     }
 }

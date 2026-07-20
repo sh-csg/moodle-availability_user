@@ -41,7 +41,7 @@ class condition extends \core_availability\condition {
     public function __construct($structure) {
         $this->userids = [];
         if (isset($structure->userids)) {
-            $this->userids = $structure->userids;
+            $this->userids = (array)$structure->userids;
         }
         // Ensure compatibility with old version.
         if (isset($structure->userid)) {
