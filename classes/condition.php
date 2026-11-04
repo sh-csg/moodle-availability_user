@@ -91,7 +91,7 @@ class condition extends \core_availability\condition {
      */
     public function filter_user_list(array $users, $not, \core_availability\info $info, capability_checker $checker) {
         foreach ($users as $userid => $user) {
-            if (!$this->is_available($not, $info, false, $userid)) {
+            if (!$this->is_available($not, $info, false, $user->id)) {
                 unset($users[$userid]);
             }
         }
@@ -120,7 +120,8 @@ class condition extends \core_availability\condition {
                 }
                 return get_string('requires_' . ($not ? 'not_' : '') . 'users', 'availability_user', implode(', ', $usernames));
             } else {
-                $user = \core_user::get_user(array_shift($this->userids));
+                $userid = reset($this->userids);
+                $user = \core_user::get_user($userid);
                 if (!$user) {
                     $fullname = get_string('unknown_user', 'availability_user');
                 } else {

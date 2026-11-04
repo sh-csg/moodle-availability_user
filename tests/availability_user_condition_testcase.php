@@ -172,6 +172,8 @@ class availability_user_condition_testcase extends \advanced_testcase {
         global $USER;
         $this->setUser($this->user1);
         $this->assertTrue($this->newcond->is_available(false, $this->info, true, $USER->id));
+        $this->newcond->get_description(false, true, $this->info);
+        $this->assertTrue($this->newcond->is_available(false, $this->info, true, $USER->id));
     }
 
     /**
@@ -184,6 +186,8 @@ class availability_user_condition_testcase extends \advanced_testcase {
         global $USER;
         $this->setUser($this->user1);
         $this->assertFalse($this->newcond->is_available(true, $this->info, true, $USER->id));
+        $this->newcond->get_description(true, true, $this->info);
+        $this->assertFalse($this->newcond->is_available(true, $this->info, true, $USER->id));
     }
 
     /**
@@ -195,6 +199,9 @@ class availability_user_condition_testcase extends \advanced_testcase {
     public function test_wrong_user_new_structure() {
         global $USER;
         $this->setUser($this->user2);
+        $this->assertFalse($this->newcond->is_available(false, $this->info, true, $USER->id));
+        $this->assertTrue($this->newcond->is_available(true, $this->info, true, $USER->id));
+        $this->newcond->get_description(true, true, $this->info);
         $this->assertFalse($this->newcond->is_available(false, $this->info, true, $USER->id));
         $this->assertTrue($this->newcond->is_available(true, $this->info, true, $USER->id));
     }
@@ -285,6 +292,19 @@ class availability_user_condition_testcase extends \advanced_testcase {
         $this->assertTrue(in_array($this->user2->id, $filtereduserids));
         $this->assertTrue(in_array($this->user3->id, $filtereduserids));
         $this->assertFalse(in_array($this->user4->id, $filtereduserids));
+        $this->multiplecond->get_description(true, true, $this->info);
+        $users = [
+            $this->user1->id => $this->user1,
+            $this->user2->id => $this->user2,
+            $this->user3->id => $this->user3,
+            $this->user4->id => $this->user4,
+        ];
+        $filteredlist = $this->multiplecond->filter_user_list($users, false, $this->info, $this->capabilitychecker);
+        $filtereduserids = array_keys($filteredlist);
+        $this->assertTrue(in_array($this->user1->id, $filtereduserids));
+        $this->assertTrue(in_array($this->user2->id, $filtereduserids));
+        $this->assertTrue(in_array($this->user3->id, $filtereduserids));
+        $this->assertFalse(in_array($this->user4->id, $filtereduserids));
     }
 
     /**
@@ -305,6 +325,20 @@ class availability_user_condition_testcase extends \advanced_testcase {
         $this->assertFalse(in_array($this->user2->id, $filtereduserids));
         $this->assertFalse(in_array($this->user3->id, $filtereduserids));
         $this->assertTrue(in_array($this->user4->id, $filtereduserids));
+        $this->multiplecond->get_description(false, true, $this->info);
+        $users = [
+            $this->user1->id => $this->user1,
+            $this->user2->id => $this->user2,
+            $this->user3->id => $this->user3,
+            $this->user4->id => $this->user4,
+        ];
+        $filteredlist = $this->multiplecond->filter_user_list($users, true, $this->info, $this->capabilitychecker);
+        $filtereduserids = array_keys($filteredlist);
+        $this->assertFalse(in_array($this->user1->id, $filtereduserids));
+        $this->assertFalse(in_array($this->user2->id, $filtereduserids));
+        $this->assertFalse(in_array($this->user3->id, $filtereduserids));
+        $this->assertTrue(in_array($this->user4->id, $filtereduserids));
+
     }
 
     /**
