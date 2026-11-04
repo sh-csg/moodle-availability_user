@@ -120,7 +120,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_right_user_old_structure() {
+    public function test_right_user_old_structure(): void {
         global $USER;
         $this->setUser($this->user1);
         $this->assertTrue($this->cond->is_available(false, $this->info, true, $USER->id));
@@ -132,7 +132,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_right_user_not_old_structure() {
+    public function test_right_user_not_old_structure(): void {
         global $USER;
         $this->setUser($this->user1);
         $this->assertFalse($this->cond->is_available(true, $this->info, true, $USER->id));
@@ -144,7 +144,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_wrong_user_old_structure() {
+    public function test_wrong_user_old_structure(): void {
         global $USER;
         $this->setUser($this->user2);
         $this->assertFalse($this->cond->is_available(false, $this->info, true, $USER->id));
@@ -157,7 +157,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_wrong_user_not_old_structure() {
+    public function test_wrong_user_not_old_structure(): void {
         global $USER;
         $this->setUser($this->user2);
         $this->assertTrue($this->cond->is_available(true, $this->info, true, $USER->id));
@@ -169,7 +169,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_right_user_new_structure() {
+    public function test_right_user_new_structure(): void {
         global $USER;
         $this->setUser($this->user1);
         $this->assertTrue($this->newcond->is_available(false, $this->info, true, $USER->id));
@@ -183,7 +183,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_right_user_not_new_structure() {
+    public function test_right_user_not_new_structure(): void {
         global $USER;
         $this->setUser($this->user1);
         $this->assertFalse($this->newcond->is_available(true, $this->info, true, $USER->id));
@@ -197,7 +197,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_wrong_user_new_structure() {
+    public function test_wrong_user_new_structure(): void {
         global $USER;
         $this->setUser($this->user2);
         $this->assertFalse($this->newcond->is_available(false, $this->info, true, $USER->id));
@@ -213,7 +213,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_wrong_user_not_new_structure() {
+    public function test_wrong_user_not_new_structure(): void {
         global $USER;
         $this->setUser($this->user2);
         $this->assertTrue($this->newcond->is_available(true, $this->info, true, $USER->id));
@@ -225,7 +225,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_right_users_multiple() {
+    public function test_right_users_multiple(): void {
         global $USER;
         $this->setUser($this->user1);
         $this->assertTrue($this->multiplecond->is_available(false, $this->info, true, $USER->id));
@@ -241,7 +241,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_right_user_not_multiple() {
+    public function test_right_user_not_multiple(): void {
         global $USER;
         $this->setUser($this->user1);
         $this->assertFalse($this->multiplecond->is_available(true, $this->info, true, $USER->id));
@@ -257,7 +257,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_wrong_user_multiple() {
+    public function test_wrong_user_multiple(): void {
         global $USER;
         $this->setUser($this->user4);
         $this->assertFalse($this->multiplecond->is_available(false, $this->info, true, $USER->id));
@@ -269,7 +269,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_wrong_user_not_multiple() {
+    public function test_wrong_user_not_multiple(): void {
         global $USER;
         $this->setUser($this->user4);
         $this->assertTrue($this->multiplecond->is_available(true, $this->info, true, $USER->id));
@@ -280,7 +280,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_users_multiple_filter() {
+    public function test_users_multiple_filter(): void {
         $users = [
             $this->user1->id => $this->user1,
             $this->user2->id => $this->user2,
@@ -313,7 +313,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_users_multiple_filter_not() {
+    public function test_users_multiple_filter_not(): void {
         $users = [
             $this->user1->id => $this->user1,
             $this->user2->id => $this->user2,
@@ -339,7 +339,6 @@ final class condition_test extends \advanced_testcase {
         $this->assertFalse(in_array($this->user2->id, $filtereduserids));
         $this->assertFalse(in_array($this->user3->id, $filtereduserids));
         $this->assertTrue(in_array($this->user4->id, $filtereduserids));
-
     }
 
     /**
@@ -347,7 +346,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_empty_user_list_availability() {
+    public function test_empty_user_list_availability(): void {
         global $USER;
         $this->setUser($this->user1);
         $this->assertFalse($this->emptycond->is_available(false, $this->info, true, $USER->id));
@@ -359,7 +358,7 @@ final class condition_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_empty_user_list_full_description() {
+    public function test_empty_user_list_full_description(): void {
         $this->assertEquals(
             get_string('requires_certain_user', 'availability_user'),
             $this->emptycond->get_description(true, false, $this->info)
