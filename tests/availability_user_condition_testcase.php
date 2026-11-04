@@ -27,36 +27,36 @@ namespace availability_user;
 /**
  * Testcase for availability_user
  */
-class availability_user_condition_testcase extends advanced_testcase {
-    /** @var $info */
-    protected $info;
+class availability_user_condition_testcase extends \advanced_testcase {
+    /** @var \core_availability\mock_info $info */
+    protected \core_availability\mock_info $info;
 
-    /** @var $capabilitychecker */
-    protected $capabilitychecker;
+    /** @var \core_availability\capability_checker $capabilitychecker */
+    protected \core_availability\capability_checker $capabilitychecker;
 
-    /** @var $user1 */
-    protected $user1;
+    /** @var \stdClass $user1 */
+    protected \stdClass $user1;
 
-    /** @var $user2 */
-    protected $user2;
+    /** @var \stdClass $user2 */
+    protected \stdClass $user2;
 
-    /** @var $user3 */
-    protected $user3;
+    /** @var \stdClass $user3 */
+    protected \stdClass $user3;
 
-    /** @var $user4 */
-    protected $user4;
+    /** @var \stdClass $user4 */
+    protected \stdClass $user4;
 
-    /** @var $cond */
-    protected $cond;
+    /** @var condition $cond */
+    protected condition $cond;
 
-    /** @var $newcond */
-    protected $newcond;
+    /** @var condition $newcond */
+    protected condition $newcond;
 
-    /** @var $multiplecond */
-    protected $multiplecond;
+    /** @var condition $multiplecond */
+    protected condition $multiplecond;
 
-    /** @var $emptycond */
-    protected $emptycond;
+    /** @var condition $emptycond */
+    protected condition $emptycond;
 
     /**
      * Load necessary libs
@@ -108,7 +108,7 @@ class availability_user_condition_testcase extends advanced_testcase {
         $multiplestructure->userids = [$this->user1->id, $this->user2->id, $this->user3->id];
         $this->multiplecond = new condition($multiplestructure);
 
-        $emptystructure = new stdClass();
+        $emptystructure = new \stdClass();
         $emptystructure->userids = [];
         $this->emptycond = new condition($emptystructure);
     }
