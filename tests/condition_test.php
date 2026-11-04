@@ -26,6 +26,7 @@ namespace availability_user;
 
 /**
  * Testcase for availability_user
+ * @covers \availability_user\condition
  */
 final class condition_test extends \advanced_testcase {
     /** @var \core_availability\mock_info $info */
