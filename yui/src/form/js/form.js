@@ -13,7 +13,7 @@ M.availability_user.form.getNode = function(json) {
 
     this.params.forEach(
         function(val) {
-            html += '<option value="' + val.id + '">' + val.fullname + '</option>';
+            html += '<option value="' + val.id + '">' + Y.Escape.html(val.fullname) + '</option>';
         }
     );
 
