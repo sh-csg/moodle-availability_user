@@ -10,8 +10,8 @@ M.availability_user.form.initInner = function(param) {
 };
 
 M.availability_user.form.getNode = function(json) {
-    var html = '<label><span class="col-form-label pr-3">' + M.util.get_string('title', 'availability_user') +
-        '</span><span class="availability-group form-group"><select id="availability_user_userids" class="custom-select" multiple>';
+    var html = '<label><span class="form-label pe-3">' + M.util.get_string('title', 'availability_user') +
+        '</span><span class="availability-group"><select id="availability_user_userids" class="form-select w-100" multiple>';
 
     this.params.forEach(
         function(val) {
